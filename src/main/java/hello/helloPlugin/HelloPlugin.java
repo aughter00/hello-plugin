@@ -13,9 +13,11 @@ public final class HelloPlugin extends JavaPlugin implements Listener {
         // Plugin startup logic
         System.out.println("Hello, Plugin!");
 
-        // playerMoveChecker pmc = new playerMoveChecker();
-
+        // PlayerMoveChecker pmc = new playerMoveChecker();
         Bukkit.getPluginManager().registerEvents(this, this);
+
+        HelloCommand hc = new HelloCommand();
+        getCommand("hello").setExecutor(hc);
     }
 
     @EventHandler

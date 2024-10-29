@@ -2,6 +2,6 @@ package hello.helloPlugin;
 
 import org.bukkit.event.Listener;
 
-public class playerMoveChecker implements Listener {
+public class PlayerMoveChecker implements Listener {
 
 }
