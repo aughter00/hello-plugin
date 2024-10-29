@@ -1,0 +1,4 @@
+name: hello-plugin
+version: '1.0-SNAPSHOT'
+main: hello.helloPlugin.HelloPlugin
+api-version: '1.21'
