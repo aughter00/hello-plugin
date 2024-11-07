@@ -1,7 +1,8 @@
 package hello.helloPlugin;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+//import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -18,12 +19,16 @@ public final class HelloPlugin extends JavaPlugin implements Listener {
 
         HelloCommand hc = new HelloCommand();
         getCommand("hello").setExecutor(hc);
+
+        String userInfo = getAPI.getUserInfo("Alice", "inventory");
+        System.out.println(userInfo);
     }
 
     @EventHandler
     public void onPlayerMoveCheck(PlayerMoveEvent ev) {
         ev.setCancelled(true);
-        ev.getPlayer().sendMessage(ChatColor.RED + "Don't move!");
+        String warnMsg = MessageBeautify.makeMessageGradation("[경고] Don't Move!!!!!", 3);
+        ev.getPlayer().sendMessage(ChatColor.BOLD + warnMsg);
     }
 
     // @Override
