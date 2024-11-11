@@ -4,7 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import java.awt.Color;
 
 public final class MessageBeautify {
-    public static final Color[] colorGradation = new Color[]{
+    public static final Color[] COLOR_GRADATION = new Color[]{
             new Color(0xe60000),
             new Color(0xe67300),
             new Color(0xe6e600),
@@ -19,14 +19,14 @@ public final class MessageBeautify {
         int n = str.length();
         final int _colorNum = colorNum;
         for(int i=0; i<n; i++) {
-            newString += ChatColor.of(colorGradation[i % _colorNum]);
+            newString += ChatColor.of(COLOR_GRADATION[i % _colorNum]);
             newString += str.charAt(i);
         }
         return newString;
     }
 
     public static String makeMessageGradation(String str) {
-        return makeMessageGradation(str, colorGradation.length);
+        return makeMessageGradation(str, COLOR_GRADATION.length);
     }
 
     public static String makeMessageGradationBySwitch(String str) {

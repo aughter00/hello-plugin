@@ -22,6 +22,9 @@ public final class HelloPlugin extends JavaPlugin implements Listener {
 
         String userInfo = getAPI.getUserInfo("Alice", "inventory");
         System.out.println(userInfo);
+
+        String completion = getAPI.postChatCompletion("안녕, 마인크래프트 엔더드래곤 5분 안에 잡는 방법이 뭐니 ㅎㅎ?");
+        System.out.println(completion);
     }
 
     @EventHandler
