@@ -17,16 +17,14 @@ public final class HelloPlugin extends JavaPlugin implements Listener {
         // PlayerMoveChecker pmc = new playerMoveChecker();
         Bukkit.getPluginManager().registerEvents(this, this);
 
-        HelloCommand hc = new HelloCommand();
-        getCommand("hello").setExecutor(hc);
+        getCommand("hello").setExecutor(new HelloCommand());
+        getCommand("guide").setExecutor(new GuideCommand());
 
-        String userInfo = getAPI.getUserInfo("Alice", "inventory");
-        System.out.println(userInfo);
-
-        String completion = getAPI.postChatCompletion("안녕, 마인크래프트 엔더드래곤 5분 안에 잡는 방법이 뭐니 ㅎㅎ?");
-        System.out.println(completion);
+        // String userInfo = GetAPI.getUserInfo("Alice", "inventory");
+        // System.out.println(userInfo);
     }
 
+    /*
     @EventHandler
     public void onPlayerMoveCheck(PlayerMoveEvent ev) {
         ev.setCancelled(true);
@@ -34,8 +32,9 @@ public final class HelloPlugin extends JavaPlugin implements Listener {
         ev.getPlayer().sendMessage(ChatColor.BOLD + warnMsg);
     }
 
-    // @Override
-    // public void onDisable() {
-    //     // Plugin shutdown logic
-    // }
+    @Override
+    public void onDisable() {
+        // Plugin shutdown logic
+    }
+    */
 }
