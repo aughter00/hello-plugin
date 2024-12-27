@@ -12,19 +12,24 @@ import java.net.http.HttpResponse;
 
 public class GetAPI {
     private static final Dotenv dotenv = Dotenv.load();
+    private static final String DISCORD_BOT_PORT = "3000";
     private static final String OAI_API_MODEL = "gpt-4o-mini";
     private static final Number OAI_API_TEMP = 1.1;
     private static final String OAI_API_SYSTEM_CONTENT = "You are a Minecraft expert, and as a Newbie Guardian, you can explain anything about Minecraft in a very friendly tone of voice. (Use emoticons with special character combinations and be TMI.) If the topic of conversation veers away from Minecraft, say you don't know.";
     private static final String OAI_API_KEY = dotenv.get("OPENAI_API_KEY");
 
-    public static String getUserInfo(String userid, String category) {
-        String uri = "http://localhost:1234/" + userid + "/" + category + "/";
+    public static String postDiscordChannelMessage(String msg) {
+        String uri = "http://localhost:" + DISCORD_BOT_PORT + "/discord";
 
         try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("msg", msg);
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(uri))
+                    .setHeader(HttpHeaders.CONTENT_TYPE, "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
                     .build();
 
             HttpResponse<String> response = client.send(
