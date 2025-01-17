@@ -1,5 +1,5 @@
 name: hello-plugin
-version: '1.6-SNAPSHOT'
+version: '1.7-SNAPSHOT'
 main: hello.helloPlugin.HelloPlugin
 api-version: '1.21.1'
 authors: [ aughter00 ]

@@ -8,8 +8,14 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class PlayerDeathChecker implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent ev) {
-        Player player = ev.getEntity();
-        Player killer = player.getKiller();
-        PlayerPrizeBoard.addPrize(killer, 100);
+        if (ev.getEntity() instanceof Player) {
+            Player player = (Player) ev.getEntity();
+            if (player == null) return;
+
+            Player killer = player.getKiller();
+            if (killer == null) return;
+
+            PlayerPrizeBoard.addPrize(killer, 100);
+        }
     }
 }

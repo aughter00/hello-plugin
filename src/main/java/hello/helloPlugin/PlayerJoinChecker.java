@@ -36,5 +36,8 @@ public class PlayerJoinChecker implements Listener {
 
         String res = GetAPI.postDiscordChannelMessage(msg);
         System.out.println(res);
+
+        // 나간 플레이어가 있으면 스코어보드 갱신하기
+        PlayerPrizeBoard.updateBoard();
     }
 }
