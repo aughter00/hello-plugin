@@ -22,8 +22,8 @@ public class PlayerJoinChecker implements Listener {
         String res = GetAPI.postDiscordChannelMessage(msg);
         System.out.println(res);
 
-        // 새로운 플레이어에게 스코어보드 표시하기
-        PlayerPrizeBoard.showBoard(player);
+        // 새로운 플레이어를 스코어보드에 등록하기
+        PlayerPrizeBoard.addPlayer(player);
     }
 
     @EventHandler
@@ -38,6 +38,6 @@ public class PlayerJoinChecker implements Listener {
         System.out.println(res);
 
         // 나간 플레이어가 있으면 스코어보드 갱신하기
-        PlayerPrizeBoard.updateBoard();
+        PlayerPrizeBoard.updateBoard(null, player);
     }
 }

@@ -15,23 +15,28 @@ public class PlayerPrizeBoard {
     private static HashMap<String, Integer> prizeList = new HashMap<>();
     private static HashMap<String, Integer> prizeListOnline = new HashMap<>(MAX_PLAYER);
 
-    public static void showBoard(Player newPlayer) {
-        String nick = newPlayer.getName();
-
-        prizeObjective = sb.registerNewObjective(
-                "PRIZE",
-                "DUMMY",
-                MessageBeautify.makeMessageGradation("==현상금 수배자==")
-        );
-        prizeObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-
+    public static void addPlayer(Player newPlayer) {
         // 최초 접속시: 해당 닉네임의 현상금을 0원으로 초기화
+        String nick = newPlayer.getName();
         prizeList.putIfAbsent(nick, 0);
-
-        newPlayer.setScoreboard(sb);
+        updateBoard(newPlayer, null);
     }
 
-    public static void updateBoard() {
+    public static void addPrize(Player killer, int value) {
+        String nick = killer.getName();
+
+        // 해당 닉네임의 현상금 불러오기
+        int prize = prizeList.getOrDefault(nick, 0);
+
+        // 해당 닉네임의 현상금 추가하기
+        int newPrize = prize + value;
+        prizeList.put(nick, newPrize);
+
+        // 스코어보드 갱신하기
+        updateBoard(null, null);
+    }
+
+    public static void updateBoard(Player newPlayer, Player exPlayer) {
         // TODO: 온라인 유저 중 상위권 10등 갱신하고, 표시하기!
 
         // 온라인 유저 닉네임 목록 만들기
@@ -39,6 +44,15 @@ public class PlayerPrizeBoard {
         HashSet<String> onlinePlayerNicks = new HashSet<>();
         for (Player player : onlinePlayers) {
             String nick = player.getName();
+
+            // 나간 유저의 닉네임이면 건너뛰기
+            if (exPlayer != null) {
+                String exNick = exPlayer.getName();
+                if (nick.equals(exNick)) {
+                    continue;
+                }
+            }
+
             onlinePlayerNicks.add(nick);
         }
 
@@ -56,7 +70,9 @@ public class PlayerPrizeBoard {
         prizeListOnlineSorted.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
 
         // 스코어보드 삭제하고 다시 만들기
-        prizeObjective.unregister();
+        if (prizeObjective != null) {
+            prizeObjective.unregister();
+        }
         prizeObjective = sb.registerNewObjective(
                 "PRIZE",
                 "DUMMY",
@@ -83,19 +99,10 @@ public class PlayerPrizeBoard {
         for (Player player : onlinePlayers) {
             player.setScoreboard(sb);
         }
-    }
 
-    public static void addPrize(Player killer, int value) {
-        String nick = killer.getName();
-
-        // 해당 닉네임의 현상금 불러오기
-        int prize = prizeList.getOrDefault(nick, 0);
-
-        // 해당 닉네임의 현상금 추가하기
-        int newPrize = prize + value;
-        prizeList.put(nick, newPrize);
-
-        // 스코어보드 갱신하기
-        updateBoard();
+        // 접속한 유저에게 새로운 스코어보드 표시하기
+        if (newPlayer != null) {
+            newPlayer.setScoreboard(sb);
+        }
     }
 }
